@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+header h1 {
+    font-size: 2.5em;
+    letter-spacing: 2px;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#article-detail h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.image-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.category {
+    font-weight: bold;
+    color: #ffffff; /* Text color */
+    background-color: #2c2c2d; /* Background color (blue in this case) */
+    padding: 5px 10px; /* Padding around the text */
+    border-radius: 5px; /* Rounded corners */
+    display: inline-block; /* Makes the background fit the text size */
+    margin-bottom: 20px;
+}
+
+
+.content {
+    text-align: justify;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Menambahkan margin pada list terurut (ol) */
+ol {
+    margin-left: 20px; /* Jarak dari kiri agar list tidak menempel */
+    padding-left: 20px;
+    margin-bottom: 20px; /* Jarak di bawah list */
+}
+
+/* Jarak antar item list */
+ol li {
+    margin-bottom: 10px;
+}
+
+/* Jarak antara paragraf di dalam list */
+ol li p {
+    margin-bottom: 10px;
+}
+
+/* Menambah jarak antar baris dalam list */
+li {
+    line-height: 1.8;
+}
+
+/* Membuat heading lebih menonjol */
+#article-detail h3 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Menambah padding pada footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #777;
+    padding: 20px 0;
+}
