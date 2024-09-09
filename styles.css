@@ -1,4 +1,3 @@
-/* Global Styles */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,7 +10,6 @@ body {
     color: #333;
 }
 
-/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -50,7 +48,6 @@ body {
     text-decoration: underline;
 }
 
-/* Header */
 .header {
     text-align: center;
     padding: 120px 20px 40px;
@@ -69,7 +66,6 @@ body {
     margin-bottom: 30px;
 }
 
-/* Search Bar */
 .search-bar {
     display: flex;
     align-items: center;
@@ -137,7 +133,6 @@ body {
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
-/* Optional: Hover effect for the search icon */
 .search-bar .search-icon:hover svg {
     fill: #365f8a;
 }
@@ -234,7 +229,6 @@ body {
     color: #fff;
 }
 
-/* Main Content */
 .main-content {
     display: flex;
     flex-wrap: wrap;
@@ -302,7 +296,6 @@ body {
     font-weight: bold;
 }
 
-/* Footer */
 .footer {
     text-align: center;
     padding: 20px;

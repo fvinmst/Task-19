@@ -15,15 +15,13 @@
     <main>
         <section id="article-detail">
             <?php
-            // Memeriksa apakah 'article_id' ada di URL
             if (isset($_GET['article_id'])) {
-                $article_id = $_GET['article_id']; // Mengambil article_id
+                $article_id = $_GET['article_id']; 
             } else {
                 echo '<p>No article ID provided.</p>';
-                exit(); // Hentikan eksekusi jika tidak ada ID
+                exit(); 
             }
 
-            // Prepared statement untuk menghindari SQL injection
             if ($stmt = $mysqli->prepare("
                 SELECT articles.*, 
                        GROUP_CONCAT(categories.category_name SEPARATOR ', ') AS category_names 
@@ -32,7 +30,7 @@
                 JOIN categories ON article_categories.category_id = categories.id 
                 WHERE articles.id = ?")) {
                 
-                $stmt->bind_param("i", $article_id); // Mengikat parameter (integer)
+                $stmt->bind_param("i", $article_id); 
                 $stmt->execute();
                 $result = $stmt->get_result();
                 
@@ -41,9 +39,7 @@
                     echo '<div class="image-container">';
                     echo '<img src="' . htmlspecialchars($row['image']) . '" alt="' . htmlspecialchars($row['title']) . '">';
                     echo '</div>';
-                    // Menampilkan kategori dengan lebih dari satu nama
                     echo '<p class="category">Category: ' . htmlspecialchars($row['category_names']) . '</p>';
-                    // Menggunakan htmlspecialchars_decode jika konten memiliki HTML yang ingin dirender
                     echo '<div class="content">' . htmlspecialchars_decode($row['content']) . '</div>';
                 } else {
                     echo '<p>Article not found.</p>';
@@ -53,9 +49,5 @@
             ?>
         </section>
     </main>
-
-    <footer>
-        <p>&copy; 2024 Simple Tech Blog</p>
-    </footer>
 </body>
 </html>

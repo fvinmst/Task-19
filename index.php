@@ -1,23 +1,17 @@
 <?php
-// Koneksi ke database
 $connection = new mysqli('localhost', 'root', '', 'tech_blog');
 
-// Cek koneksi
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
-// Ambil semua kategori dari database
 $categories = $connection->query("SELECT * FROM categories");
 
-// Ambil input pencarian dari URL jika ada
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Ambil dua kategori dari URL jika ada
 $category_id1 = isset($_GET['category_id1']) ? (int)$_GET['category_id1'] : null;
 $category_id2 = isset($_GET['category_id2']) ? (int)$_GET['category_id2'] : null;
 
-// SQL Query untuk pencarian artikel dengan multiple categories
 $sql = "
     SELECT articles.*, GROUP_CONCAT(categories.category_name SEPARATOR ', ') AS category_names
     FROM articles
@@ -26,46 +20,40 @@ $sql = "
     WHERE 1=1
 ";
 
-// Filter berdasarkan kategori jika ada
 if ($category_id1 && $category_id2) {
-    // Filter berdasarkan dua kategori
     $sql .= " AND (article_categories.category_id = ? OR article_categories.category_id = ?)";
 } elseif ($category_id1) {
-    // Filter berdasarkan satu kategori
     $sql .= " AND article_categories.category_id = ?";
 }
 
-// Filter berdasarkan pencarian jika ada
 if (!empty($searchQuery)) {
-    $searchQuery = $connection->real_escape_string($searchQuery); // Mengamankan input
+    $searchQuery = $connection->real_escape_string($searchQuery); 
     $sql .= " AND (articles.title LIKE ? OR articles.content LIKE ?)";
 }
 
-$sql .= " GROUP BY articles.id"; // Menggabungkan hasil berdasarkan artikel
+$sql .= " GROUP BY articles.id"; 
 
-// Siapkan dan eksekusi query
 $stmt = $connection->prepare($sql);
 
-// Bind parameter
 $params = [];
 $types = '';
 
 if ($category_id1 && $category_id2) {
     $params[] = $category_id1;
     $params[] = $category_id2;
-    $types .= 'ii'; // dua integer
+    $types .= 'ii'; 
 } elseif ($category_id1) {
     $params[] = $category_id1;
-    $types .= 'i'; // satu integer
+    $types .= 'i'; 
 }
 
 if (!empty($searchQuery)) {
     $params[] = "%$searchQuery%";
     $params[] = "%$searchQuery%";
-    $types .= 'ss'; // dua string
+    $types .= 'ss'; 
 }
 
-// Bind params and execute
+
 if ($types) {
     $stmt->bind_param($types, ...$params);
 }
@@ -112,24 +100,20 @@ $articles = $stmt->get_result();
     
     <nav class="categories">
         <a href="index.php" class="category-btn">All</a>
-        <!-- Menampilkan kategori -->
         <?php while($category = $categories->fetch_assoc()): ?>
             <a href="index.php?category_id1=<?= $category['id']; ?>" class="category-btn"><?= htmlspecialchars($category['category_name']); ?></a>
         <?php endwhile; ?>
     </nav>
     
     <main class="main-content">
-        <!-- Jika ada artikel, tampilkan -->
         <?php if ($articles->num_rows > 0): ?>
             <?php while($article = $articles->fetch_assoc()): ?>
                 <div class="card">
                     <img src="<?= htmlspecialchars($article['image']); ?>" alt="<?= htmlspecialchars($article['title']); ?>">
                     <div class="card-content">
-                        <!-- Tampilkan nama kategori -->
                         <span class="category-label"><?= strtoupper(htmlspecialchars($article['category_names'])); ?></span>
                         <span class="post-info">Favian Mustafa Syaukani</span>
                         <h2><?= htmlspecialchars($article['title']); ?></h2>
-                        <!-- Potong deskripsi artikel hingga 100 karakter -->
                         <p><?= htmlspecialchars(substr($article['content'], 0, 100)) . (strlen($article['content']) > 100 ? '...' : ''); ?></p>
                         <a href="detail.php?article_id=<?= $article['id']; ?>">Read Post</a>
                     </div>
@@ -147,6 +131,5 @@ $articles = $stmt->get_result();
 </html>
 
 <?php
-// Tutup koneksi database
 $connection->close();
 ?>
